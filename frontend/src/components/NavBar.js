@@ -1,107 +1,96 @@
 import React from "react";
 import {
   Box,
-  Flex,
-  Spacer,
-  Heading,
-  IconButton,
-  useDisclosure,
-  Collapse,
   HStack,
+  Image,
+  Tooltip,
+  InputGroup,
+  InputLeftElement,
+  Input,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem,
+  Avatar,
+  Spacer,
   VStack,
-  Link as ChakraLink,
-  useBreakpointValue,
+  Tabs,
+  TabList,
+  Tab,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { Link } from "react-router-dom";
+import { SearchIcon } from "@chakra-ui/icons";
+import logo from "../logo.jpg";
 
 const Navbar = () => {
-  const { isOpen, onToggle } = useDisclosure();
-
-  const display = useBreakpointValue({
-    base: "block",
-    sm: "block",
-    md: "none",
-  });
-
   return (
-    <Box p={4}>
-      <Flex alignItems="center">
-        <Heading size="md" mx={5}>
-          News App
-        </Heading>
-        <Spacer />
+    <Box
+      px={4}
+      position={"sticky"}
+      top={0}
+      zIndex={1}
+      backgroundColor={"white"}
+     mt={2}
+    >
+      <VStack>
+        <HStack w={"100%"}>
+          <Tooltip label="News Monkey" aria-label="A tooltip">
+            <Image src={logo} width={"50px"} borderRadius={"full"} />
+          </Tooltip>
 
-        <HStack spacing={4} display={{base: "none", md: "block"}}>
-          <ChakraLink
-            as={Link}
-            to="/"
-            textDecoration="none"
-            _hover={{ textDecoration: "none" }}
-            mr={8}
-          >
-            Home
-          </ChakraLink>
+          <Spacer />
 
-          <ChakraLink
-            as={Link}
-            to="/about"
-            textDecoration="none"
-            _hover={{ textDecoration: "none" }}
-            mr={8}
-          >
-            About
-          </ChakraLink>
+          <InputGroup w={"50%"}>
+            <InputLeftElement pointerEvents="none">
+              <SearchIcon color="gray.300" />
+            </InputLeftElement>
+            <Input
+              type="txt"
+              placeholder="search for topics, locations, sources"
+            />
+          </InputGroup>
 
-          <ChakraLink
-            as={Link}
-            to="/contact"
-            textDecoration="none"
-            _hover={{ textDecoration: "none" }}
-            mr={8}
-          >
-            Contact
-          </ChakraLink>
+          <Spacer />
+
+          <Menu>
+            <MenuButton>
+              <Avatar src="" name="Biswajit Panda" w={"50px"}></Avatar>
+            </MenuButton>
+            <MenuList>
+              <MenuItem>My Preferences</MenuItem>
+              <MenuItem>Sign Out</MenuItem>
+            </MenuList>
+          </Menu>
         </HStack>
-
-        <Spacer />
-
-        <IconButton
-          display={display}
-          onClick={onToggle}
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          variant="ghost"
-        />
-      </Flex>
-
-      <Collapse in={isOpen} animateOpacity>
-        <VStack spacing={4} align="start" mt={4}>
-          <ChakraLink
-            as={Link}
-            to="/"
-            textDecoration="none"
-            _hover={{ textDecoration: "none" }}
-          >
-            Home
-          </ChakraLink>
-          <ChakraLink
-            as={Link}
-            to="/about"
-            textDecoration="none"
-            _hover={{ textDecoration: "none" }}
-          >
-            About
-          </ChakraLink>
-          <ChakraLink
-            as={Link}
-            to="/contact"
-            textDecoration="none"
-            _hover={{ textDecoration: "none" }}
-          >
-            Contact
-          </ChakraLink>
-        </VStack>
-      </Collapse>
+        <Tabs>
+          <TabList>
+            <Tab>Home</Tab>
+            <Tab>For You</Tab>
+            <Tab>Followings</Tab>
+            <Tab>India</Tab>
+            <Tab>World</Tab>
+            <Tab>Local</Tab>
+            <Tab>Science</Tab>
+            <Tab>Cricket</Tab>
+            <Tab>Sports</Tab>
+            <Tab>Technology</Tab>
+            <Tab>Business</Tab>
+            <Tab>Science</Tab>
+            <Tab>Health</Tab>
+          </TabList>
+{/* 
+          <TabPanels>
+            <TabPanel>
+              <p>one!</p>
+            </TabPanel>
+            <TabPanel>
+              <p>two!</p>
+            </TabPanel>
+            <TabPanel>
+              <p>three!</p>
+            </TabPanel>
+          </TabPanels> */}
+        </Tabs>
+      </VStack>
     </Box>
   );
 };

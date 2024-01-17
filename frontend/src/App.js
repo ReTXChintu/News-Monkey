@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import NewsFeed from "./components/NewsFeed";
+import TopNewsPage from "./components/TopNewsPage";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Router>
         <NavBar />
         <Routes>
-          <Route path="/" exact Component={NewsFeed} />
+          <Route exact path="/" element={<NewsFeed />} />
+          <Route exact path="/topnews" element={<TopNewsPage />} />
           {/* Add more routes as needed */}
         </Routes>
       </Router>
