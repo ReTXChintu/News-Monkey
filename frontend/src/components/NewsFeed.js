@@ -65,7 +65,6 @@ export default function NewsFeed() {
         }
 
         const result = await response.json();
-        console.log(result.totalResults);
         setTopHeadlines(result.articles);
 
         // Do something with the result (e.g., update state with the fetched data)
@@ -117,7 +116,6 @@ export default function NewsFeed() {
         }
 
         const result = await response.json();
-        console.log(result.articles[0]);
         setLocal(result.articles);
         // Do something with the result (e.g., update state with the fetched data)
       } catch (error) {
@@ -130,9 +128,8 @@ export default function NewsFeed() {
     fetchTopHeadlines();
     fetchLocalNews();
     fetchForYou();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
+
+    setIsLoading(false);
   }, []);
 
   return (
@@ -215,8 +212,8 @@ export default function NewsFeed() {
               <Button backgroundColor={"white"}>See all{">>"}</Button>
             </HStack>
             <VStack>
-              {sources.map((source) => (
-                <SourceList source={source} />
+              {sources.map((source, index) => (
+                <SourceList key={index} source={source} />
               ))}
             </VStack>
           </Box>
