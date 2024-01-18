@@ -13,14 +13,13 @@ import NewsCard from "./NewsCard";
 import DynamicStack from "./DynamicStack";
 import NewsList from "./NewsList";
 import { Link } from "react-router-dom";
-import SpinnerCircle from "./SpinnerCircle";
 import SourceList from "./SourceList";
 
-export default function NewsFeed() {
+// const newsApiKey=process.env.REACT_APP_NEWS_API_KEY
+export default function NewsFeed({ toggleLoading }) {
   const [topHeadlines, setTopHeadlines] = useState([]);
   const [forYou, setForYou] = useState([]);
   const [local, setLocal] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const sources = [
     {
@@ -48,14 +47,16 @@ export default function NewsFeed() {
   const gridWidth = useBreakpointValue({ base: "100%", lg: "80%" });
 
   useEffect(() => {
+    const newsApiKey = process.env.REACT_APP_NEWS_API_KEY;
     async function fetchTopHeadlines() {
+      toggleLoading(true);
       try {
         const response = await fetch(
           "https://newsapi.org/v2/top-headlines?country=in&pageSize=10&page=1",
           {
             method: "GET",
             headers: {
-              "X-Api-Key": "8831c698656342c59446d6cd1f0fd74d",
+              "X-Api-Key": "04f1b673e0a740ffb9242a259348ba91",
             },
           }
         );
@@ -71,17 +72,20 @@ export default function NewsFeed() {
       } catch (error) {
         console.error("Error during fetch:", error);
         // Handle the error appropriately
+      } finally {
+        toggleLoading(false);
       }
     }
 
     async function fetchForYou() {
+      toggleLoading(true);
       try {
         const response = await fetch(
           "https://newsapi.org/v2/everything?domains=techcrunch.com,thenextweb.com&pageSize=4&page=1",
           {
             method: "GET",
             headers: {
-              "X-Api-Key": "8831c698656342c59446d6cd1f0fd74d",
+              "X-Api-Key": newsApiKey,
             },
           }
         );
@@ -96,17 +100,20 @@ export default function NewsFeed() {
       } catch (error) {
         console.error("Error during fetch:", error);
         // Handle the error appropriately
+      } finally {
+        toggleLoading(false);
       }
     }
 
     async function fetchLocalNews() {
+      toggleLoading(true);
       try {
         const response = await fetch(
           "https://newsapi.org/v2/everything?q=ahmedabad&pageSize=4&page=1",
           {
             method: "GET",
             headers: {
-              "X-Api-Key": "8831c698656342c59446d6cd1f0fd74d",
+              "X-Api-Key": newsApiKey,
             },
           }
         );
@@ -121,15 +128,14 @@ export default function NewsFeed() {
       } catch (error) {
         console.error("Error during fetch:", error);
         // Handle the error appropriately
+      } finally{
+        toggleLoading(false)
       }
     }
 
-    setIsLoading(true);
     fetchTopHeadlines();
     fetchLocalNews();
     fetchForYou();
-
-    setIsLoading(false);
   }, []);
 
   return (
@@ -171,7 +177,9 @@ export default function NewsFeed() {
               <Text fontSize={"2xl"} fontWeight={"bold"}>
                 Local
               </Text>
-              <Button backgroundColor={"white"}>See all{">>"}</Button>
+              <Link to={"/localnews"}>
+                <Button backgroundColor={"white"}>See all{">>"}</Button>
+              </Link>
             </HStack>
             <VStack>
               {local.map((newsItem) => (
@@ -190,7 +198,9 @@ export default function NewsFeed() {
               <Text fontSize={"2xl"} fontWeight={"bold"}>
                 Top Picks for you
               </Text>
-              <Button backgroundColor={"white"}>See all{">>"}</Button>
+              <Link to={"/picksforyou"}>
+                <Button backgroundColor={"white"}>See all{">>"}</Button>
+              </Link>
             </HStack>
             <VStack>
               {forYou.map((newsItem) => (
@@ -219,7 +229,6 @@ export default function NewsFeed() {
           </Box>
         </VStack>
       </DynamicStack>
-      {isLoading && <SpinnerCircle />}
     </Center>
   );
 }

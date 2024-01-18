@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import {
   Box,
   HStack,
@@ -20,11 +20,13 @@ import {
   useBreakpointValue,
   InputRightElement,
   Button,
+  Progress,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import logo from "../logo.jpg";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({isLoading}) => {
   const [query, setQuery] = useState("");
   const tabDisplay = useBreakpointValue({ base: "none", md: "block" });
 
@@ -43,7 +45,7 @@ const Navbar = () => {
 
       const result = await response.json();
 
-      console.log(result.articles);
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
@@ -98,25 +100,44 @@ const Navbar = () => {
         </HStack>
         <Tabs overflowX={"auto"}>
           <TabList>
-            <Tab>Home</Tab>
-            <Tab>For You</Tab>
-            <Tab>Followings</Tab>
-            <Tab display={tabDisplay}>India</Tab>
-            <Tab display={tabDisplay}>World</Tab>
-            <Tab display={tabDisplay}>World</Tab>
-            <Tab display={tabDisplay}>Local</Tab>
-            <Tab display={tabDisplay}>Science</Tab>
-            <Tab display={tabDisplay}>Cricket</Tab>
-            <Tab display={tabDisplay}>Sports</Tab>
-            <Tab display={tabDisplay}>Technology</Tab>
-            <Tab display={tabDisplay}>Business</Tab>
-            <Tab display={tabDisplay}>Science</Tab>
-            <Tab display={tabDisplay}>Health</Tab>
+            <Link to={"/"}>
+              <Tab>Home</Tab>
+            </Link>
+            <Link to={"/picksforyou"}>
+              <Tab>For You</Tab>
+            </Link>
+            <Link to={"/india"}>
+              <Tab display={tabDisplay}>India</Tab>
+            </Link>
+            <Link to={"/world"}>
+              <Tab display={tabDisplay}>World</Tab>
+            </Link>
+            <Link to={"/localnews"}>
+              <Tab display={tabDisplay}>Local</Tab>
+            </Link>
+            <Link to={"/science"}>
+              <Tab display={tabDisplay}>Science</Tab>
+            </Link>
+            <Link to={"/cricket"}>
+              <Tab display={tabDisplay}>Cricket</Tab>
+            </Link>
+            <Link to={"/sports"}>
+              <Tab display={tabDisplay}>Sports</Tab>
+            </Link>
+            <Link to={"/technology"}>
+              <Tab display={tabDisplay}>Technology</Tab>
+            </Link>
+            <Link to={"/business"}>
+              <Tab display={tabDisplay}>Business</Tab>
+            </Link>
+            <Link to={"/health"}>
+              <Tab display={tabDisplay}>Health</Tab>
+            </Link>
           </TabList>
-          {/* 
+          {/*           
           <TabPanels>
             <TabPanel>
-              <p>one!</p>
+              <NewsFeed />
             </TabPanel>
             <TabPanel>
               <p>two!</p>
@@ -126,6 +147,7 @@ const Navbar = () => {
             </TabPanel>
           </TabPanels> */}
         </Tabs>
+         <Progress width={"100vw"} size='xs' opacity={isLoading ? 1 : 0} isIndeterminate />
       </VStack>
     </Box>
   );

@@ -1,0 +1,1 @@
+This is a news app based on news api
