@@ -128,14 +128,15 @@ export default function NewsFeed({ toggleLoading }) {
       } catch (error) {
         console.error("Error during fetch:", error);
         // Handle the error appropriately
-      } finally{
-        toggleLoading(false)
+      } finally {
+        toggleLoading(false);
       }
     }
 
     fetchTopHeadlines();
     fetchLocalNews();
     fetchForYou();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
