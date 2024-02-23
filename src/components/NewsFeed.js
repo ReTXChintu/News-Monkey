@@ -14,8 +14,9 @@ import DynamicStack from "./DynamicStack";
 import NewsList from "./NewsList";
 import { Link } from "react-router-dom";
 import SourceList from "./SourceList";
+const apiKey = process.env.REACT_APP_NEWS_API_KEY;
+const corsProxyUrl = process.env.REACT_APP_CORS_PROXY_URL;
 
-// const newsApiKey=process.env.REACT_APP_NEWS_API_KEY
 export default function NewsFeed({ toggleLoading }) {
   const [topHeadlines, setTopHeadlines] = useState([]);
   const [forYou, setForYou] = useState([]);
@@ -47,16 +48,15 @@ export default function NewsFeed({ toggleLoading }) {
   const gridWidth = useBreakpointValue({ base: "100%", lg: "80%" });
 
   useEffect(() => {
-    const newsApiKey = process.env.REACT_APP_NEWS_API_KEY;
     async function fetchTopHeadlines() {
       toggleLoading(true);
       try {
         const response = await fetch(
-          "https://newsapi.org/v2/top-headlines?country=in&pageSize=10&page=1",
+          `${corsProxyUrl}https://newsapi.org/v2/top-headlines?country=in&pageSize=10&page=1`,
           {
             method: "GET",
             headers: {
-              "X-Api-Key": "04f1b673e0a740ffb9242a259348ba91",
+              "X-Api-Key": apiKey,
             },
           }
         );
@@ -81,11 +81,11 @@ export default function NewsFeed({ toggleLoading }) {
       toggleLoading(true);
       try {
         const response = await fetch(
-          "https://newsapi.org/v2/everything?domains=techcrunch.com,thenextweb.com&pageSize=4&page=1",
+          `${corsProxyUrl}https://newsapi.org/v2/everything?domains=techcrunch.com,thenextweb.com&pageSize=4&page=1`,
           {
             method: "GET",
             headers: {
-              "X-Api-Key": newsApiKey,
+              "X-Api-Key": apiKey,
             },
           }
         );
@@ -109,11 +109,11 @@ export default function NewsFeed({ toggleLoading }) {
       toggleLoading(true);
       try {
         const response = await fetch(
-          "https://newsapi.org/v2/everything?q=ahmedabad&pageSize=4&page=1",
+          `${corsProxyUrl}https://newsapi.org/v2/everything?q=ahmedabad&pageSize=4&page=1`,
           {
             method: "GET",
             headers: {
-              "X-Api-Key": newsApiKey,
+              "X-Api-Key": apiKey,
             },
           }
         );

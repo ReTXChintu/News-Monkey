@@ -8,23 +8,24 @@ import {
 } from "@chakra-ui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import NewsCard from "./NewsCard";
+const apiKey=process.env.REACT_APP_NEWS_API_KEY
+const corsProxyUrl = process.env.REACT_APP_CORS_PROXY_URL
 
 const MoreNewsPage = ({ toggleLoading, title, url }) => {
   const [moreNews, setMoreNews] = useState([]);
   const [currentPage, setCurrentPage] = useState(2);
   const [hasMore, setHasMore] = useState(true);
-  const apikey=process.env.REACT_APP_NEWS_API_KEY;
 
   const fetchMoreNews = async () => {
     try {
       toggleLoading(true);
       const pageSize = 15; // Adjust the page size as needed
       const response = await fetch(
-        `https://newsapi.org/v2/${url}&pageSize=${pageSize}&page=${currentPage}`,
+        `${corsProxyUrl}https://newsapi.org/v2/${url}&pageSize=${pageSize}&page=${currentPage}`,
         {
           method: "GET",
           headers: {
-            "X-Api-Key": apikey,
+            "X-Api-Key": apiKey,
           },
         }
       );
@@ -56,11 +57,11 @@ const MoreNewsPage = ({ toggleLoading, title, url }) => {
         toggleLoading(true);
         const pageSize = 15; // Adjust the page size as needed
         const response = await fetch(
-          `https://newsapi.org/v2/${url}&pageSize=${pageSize}&page=1`,
+          `${corsProxyUrl}https://newsapi.org/v2/${url}&pageSize=${pageSize}&page=1`,
           {
             method: "GET",
             headers: {
-              "X-Api-Key": apikey,
+              "X-Api-Key": apiKey,
             },
           }
         );
@@ -86,7 +87,7 @@ const MoreNewsPage = ({ toggleLoading, title, url }) => {
 
     fetchNews();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, apikey]);
+  }, [url, apiKey]);
 
   return (
     <Center>
